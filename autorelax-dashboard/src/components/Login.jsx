@@ -1,15 +1,21 @@
 import  { useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 
 import "./Login.css";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log("Login Clicked");
-  };
+
+
+  const navigate=useNavigate();
+
+  const handleSubmit=(e)=>{
+ e.preventDefault();
+ console.log("Login Clicked");
+ navigate("/dashboard");
+  }
 
   return (
     <div className="login-container">
