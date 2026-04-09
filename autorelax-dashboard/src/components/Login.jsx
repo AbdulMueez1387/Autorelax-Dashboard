@@ -29,7 +29,6 @@ const Login = () => {
          
           <div className="logo-container">
             <img src="/logo.png" alt="Auto Relax Logo" className="logo-img" />
-            <h2 className="welcome-text">WELCOME BACK!</h2>
           </div>
 
          
