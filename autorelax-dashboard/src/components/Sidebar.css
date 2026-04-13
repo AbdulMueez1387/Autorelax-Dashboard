@@ -1,92 +1,68 @@
-/* Sidebar.css */
-
-/* Sidebar container */
 .sidebar {
-  width: 200px;
-  height: 100vh;
-  background-color: #ffffff; /* white sidebar */
-  color: #1f2937; /* dark text */
+  width: 250px;
+  background: white;
+  border-right: 1px solid #eee;
+  padding: 20px 0;
   display: flex;
   flex-direction: column;
-  padding-top: 20px;
-  box-shadow: 2px 0 5px rgba(0,0,0,0.05);
-  position: fixed;
-  top: 0;
+  height: 100vh;
+  position: fixed; /* Fix kar diya taake page scroll ho magar sidebar nahi */
   left: 0;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  top: 0;
+  z-index: 99;
+  padding-top: 90px; /* Navbar ke liye jagah chhodi */
 }
 
-/* Logo area */
-.sidebar .logo {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-bottom: 20px;
-}
-
-.sidebar .logo img {
-  max-width: 140px;
-  height: auto;
-}
-
-/* Section label */
 .menu-label {
-  font-size: 12px;
-  font-weight: bold;
-  color: #9ca3af; /* gray label */
+  font-size: 11px;
   text-transform: uppercase;
-  margin: 15px 0 5px 20px;
+  color: #999;
+  margin: 20px 25px 10px 25px;
+  font-weight: bold;
+  letter-spacing: 0.5px;
 }
 
-/* Menu list */
 .menu-list {
   list-style: none;
   padding: 0;
   margin: 0;
 }
 
-.menu-list li {
-  margin-bottom: 5px;
-}
-
-/* Links */
-.menu-list li a,
-.logout-wrapper {
+.menu-list li a {
   display: flex;
   align-items: center;
-  padding: 10px 20px;
-  color: #1f2937; /* dark text */
+  gap: 12px;
+  padding: 12px 25px;
+  color: #555;
+  font-size: 14px;
   text-decoration: none;
-  border-radius: 6px;
   transition: all 0.2s ease;
-  cursor: pointer;
+  border-radius: 0 25px 25px 0;
+  margin-right: 15px;
 }
 
-/* Icon spacing */
-.menu-list li a .icon,
-.logout-wrapper .icon {
-  margin-right: 12px;
-  font-size: 18px;
+.menu-list li a:hover:not(.active-link) {
+  background: #f8f9fa;
+  color: #f97316;
 }
 
-/* Hover effect */
-.menu-list li a:hover,
-.logout-wrapper:hover {
-  background-color: #f3f4f6; /* light gray */
+.menu-list li a.active-link {
+  background: #f97316;
+  color: white !important;
+  font-weight: 500;
+  box-shadow: 0 4px 12px rgba(249, 115, 22, 0.2);
 }
 
-/* Active link */
-.active-link {
-  background-color: #f97316; /* orange background */
-  color: #ffffff;
-}
-
-/* Logout section spacing */
-.logout-wrapper {
-  margin-top: 20px;
-}
-
-.logout-content {
+.logout-item {
   display: flex;
   align-items: center;
+  gap: 12px;
+  padding: 12px 25px;
+  cursor: pointer;
+  color: #555;
+  font-size: 14px;
+}
+
+.logout-item:hover {
+  color: #dc3545;
 }
