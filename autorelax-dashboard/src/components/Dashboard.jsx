@@ -1,6 +1,6 @@
 import Navbar from "./Navbar";
 import Sidebar from "./Sidebar";
-import MainContent from "./MainContent";
+import { Outlet } from "react-router-dom"; // Outlet import karein
 import "./Dashboard.css";
 
 const Dashboard = () => {
@@ -9,9 +9,13 @@ const Dashboard = () => {
       <Navbar />
       <div className="dashboard-body">
         <Sidebar />
-        <MainContent />
+        {/* MainContent ki jagah Outlet aayega taake pages switch ho sakein */}
+        <div className="dashboard-content-area">
+           <Outlet />
+        </div>
       </div>
     </div>
   );
 };
+
 export default Dashboard;

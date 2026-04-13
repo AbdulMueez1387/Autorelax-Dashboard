@@ -1,39 +1,92 @@
+/* Sidebar.css */
+
+/* Sidebar container */
 .sidebar {
-  width: 240px;
-  background: white;
-  border-right: 1px solid #eee;
-  padding: 20px 15px;
+  width: 200px;
+  height: 100vh;
+  background-color: #ffffff; /* white sidebar */
+  color: #1f2937; /* dark text */
   display: flex;
   flex-direction: column;
+  padding-top: 20px;
+  box-shadow: 2px 0 5px rgba(0,0,0,0.05);
+  position: fixed;
+  top: 0;
+  left: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
+
+/* Logo area */
+.sidebar .logo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.sidebar .logo img {
+  max-width: 140px;
+  height: auto;
+}
+
+/* Section label */
 .menu-label {
-  font-size: 11px;
-  text-transform: uppercase;
-  color: #999;
-  margin: 10px 10px;
+  font-size: 12px;
   font-weight: bold;
- 
+  color: #9ca3af; /* gray label */
+  text-transform: uppercase;
+  margin: 15px 0 5px 20px;
 }
+
+/* Menu list */
 .menu-list {
   list-style: none;
   padding: 0;
-  cursor: pointer;
+  margin: 0;
 }
+
 .menu-list li {
+  margin-bottom: 5px;
+}
+
+/* Links */
+.menu-list li a,
+.logout-wrapper {
   display: flex;
   align-items: center;
-  gap: 12px;
-  padding: 12px 15px;
-  border-radius: 8px;
+  padding: 10px 20px;
+  color: #1f2937; /* dark text */
+  text-decoration: none;
+  border-radius: 6px;
+  transition: all 0.2s ease;
   cursor: pointer;
-  color: #555;
-  font-size: 14px;
-  transition: 0.2s;
 }
-.menu-list li.active {
-  background: #f97316;
-  color: white;
+
+/* Icon spacing */
+.menu-list li a .icon,
+.logout-wrapper .icon {
+  margin-right: 12px;
+  font-size: 18px;
 }
-.menu-list li:hover:not(.active) {
-  background: #f8f9fa;
+
+/* Hover effect */
+.menu-list li a:hover,
+.logout-wrapper:hover {
+  background-color: #f3f4f6; /* light gray */
+}
+
+/* Active link */
+.active-link {
+  background-color: #f97316; /* orange background */
+  color: #ffffff;
+}
+
+/* Logout section spacing */
+.logout-wrapper {
+  margin-top: 20px;
+}
+
+.logout-content {
+  display: flex;
+  align-items: center;
 }
