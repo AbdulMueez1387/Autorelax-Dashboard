@@ -21,7 +21,6 @@ function App() {
               <Navbar />
               <div className="main-body">
                 <Sidebar />
-                {/* Main content container */}
                 <div className="content-container">
                   <Routes>
                     <Route path="/dashboard" element={<Dashboard />} />

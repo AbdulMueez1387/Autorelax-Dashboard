@@ -35,7 +35,7 @@ body {
   box-sizing: border-box;
   
   /* Scroll control */
-  overflow-y: hidden; /* Isko auto tab karna agar content bilkul fit na aaye */
+  overflow-y: auto; /* Isko auto tab karna agar content bilkul fit na aaye */
   display: flex;
   flex-direction: column;
 }
