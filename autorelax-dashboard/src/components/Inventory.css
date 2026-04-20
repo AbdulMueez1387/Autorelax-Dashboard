@@ -69,7 +69,9 @@ body::-webkit-scrollbar {
 .purple-theme {
   background: linear-gradient(135deg, #7e22ce, #a855f7);
 }
-
+.red-theme {
+  background: linear-gradient(135deg, #b91c1c, #ef4444);
+}
 .stat-count {
   font-size: 28px;
   font-weight: 800;

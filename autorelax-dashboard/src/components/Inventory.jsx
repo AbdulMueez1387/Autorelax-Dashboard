@@ -11,6 +11,7 @@ import {
   FaUpload,
   FaEllipsisH,
   FaEye,
+  FaTimesCircle
 } from "react-icons/fa";
 import "./Inventory.css";
 
@@ -69,8 +70,8 @@ const Inventory = () => {
     if (isEditing) {
       setInventoryData(
         inventoryData.map((item) =>
-          item.id === editId ? { ...finalData, id: editId } : item
-        )
+          item.id === editId ? { ...finalData, id: editId } : item,
+        ),
       );
     } else {
       setInventoryData([...inventoryData, { ...finalData, id: Date.now() }]);
@@ -103,7 +104,7 @@ const Inventory = () => {
   const filteredData = inventoryData.filter(
     (item) =>
       (selectedCategory === "All" || item.category === selectedCategory) &&
-      item.name.toLowerCase().includes(searchTerm.toLowerCase())
+      item.name.toLowerCase().includes(searchTerm.toLowerCase()),
   );
 
   return (
@@ -114,15 +115,22 @@ const Inventory = () => {
       </header>
 
       <div className="stats-grid">
+        {/* Total Items */}
         <div className="stat-card blue-theme">
-          <div className="stat-icon"><FaBox /></div>
+          <div className="stat-icon">
+            <FaBox />
+          </div>
           <div className="stat-info">
             <span className="stat-label">Total Items</span>
             <h2 className="stat-count">{inventoryData.length}</h2>
           </div>
         </div>
+
+        {/* Low Stock */}
         <div className="stat-card orange-theme">
-          <div className="stat-icon"><FaExclamationTriangle /></div>
+          <div className="stat-icon">
+            <FaExclamationTriangle />
+          </div>
           <div className="stat-info">
             <span className="stat-label">Low Stock</span>
             <h2 className="stat-count">
@@ -130,8 +138,28 @@ const Inventory = () => {
             </h2>
           </div>
         </div>
+
+        {/* Out of Stock ✅ NEW */}
+        <div className="stat-card red-theme">
+          <div className="stat-icon">
+            <FaTimesCircle />
+          </div>
+          <div className="stat-info">
+            <span className="stat-label">Out of Stock</span>
+            <h2 className="stat-count">
+              {
+                inventoryData.filter((i) => getStatus(i) === "Out of Stock")
+                  .length
+              }
+            </h2>
+          </div>
+        </div>
+
+        {/* Categories */}
         <div className="stat-card purple-theme">
-          <div className="stat-icon"><FaTags /></div>
+          <div className="stat-icon">
+            <FaTags />
+          </div>
           <div className="stat-info">
             <span className="stat-label">Categories</span>
             <h2 className="stat-count">
@@ -202,30 +230,47 @@ const Inventory = () => {
                     <td>{item.quantity}</td>
                     <td>{item.discount}%</td>
                     <td>
-                      <span className={`status-pill ${status.toLowerCase().replace(/\s+/g, "-")}`}>
+                      <span
+                        className={`status-pill ${status.toLowerCase().replace(/\s+/g, "-")}`}
+                      >
                         {status}
                       </span>
                     </td>
                     <td className="action-col">
                       <div className="action-wrapper">
-                        <button className="icon-btn edit" onClick={() => openEditModal(item)}>
+                        <button
+                          className="icon-btn edit"
+                          onClick={() => openEditModal(item)}
+                        >
                           <FaEdit />
                         </button>
                         <button
                           className="icon-btn menu"
-                          onClick={() => setActiveMenu(activeMenu === item.id ? null : item.id)}
+                          onClick={() =>
+                            setActiveMenu(
+                              activeMenu === item.id ? null : item.id,
+                            )
+                          }
                         >
                           <FaEllipsisH />
                         </button>
                         {activeMenu === item.id && (
                           <div className="dropdown-menu">
-                            <button onClick={() => {
-                              if (window.confirm("Delete?"))
-                                setInventoryData(inventoryData.filter((i) => i.id !== item.id));
-                            }}>
+                            <button
+                              onClick={() => {
+                                if (window.confirm("Delete?"))
+                                  setInventoryData(
+                                    inventoryData.filter(
+                                      (i) => i.id !== item.id,
+                                    ),
+                                  );
+                              }}
+                            >
                               <FaTrashAlt /> Delete
                             </button>
-                            <button><FaEye /> Details</button>
+                            <button>
+                              <FaEye /> Details
+                            </button>
                           </div>
                         )}
                       </div>
@@ -248,22 +293,74 @@ const Inventory = () => {
               </div>
             </div>
             <form onSubmit={handleSave}>
-              <div className="image-upload-box" onClick={() => document.getElementById("fileInput").click()}>
-                {formData.image ? <img src={formData.image} alt="preview" /> : <><FaUpload /> <p>Upload Image</p></>}
-                <input type="file" id="fileInput" hidden onChange={handleImageChange} />
+              <div
+                className="image-upload-box"
+                onClick={() => document.getElementById("fileInput").click()}
+              >
+                {formData.image ? (
+                  <img src={formData.image} alt="preview" />
+                ) : (
+                  <>
+                    <FaUpload /> <p>Upload Image</p>
+                  </>
+                )}
+                <input
+                  type="file"
+                  id="fileInput"
+                  hidden
+                  onChange={handleImageChange}
+                />
               </div>
               <div className="form-grid">
-                <input type="text" placeholder="Product Name" required value={formData.name} onChange={(e) => setFormData({ ...formData, name: e.target.value })} />
-                <select value={formData.category} onChange={(e) => setFormData({ ...formData, category: e.target.value })}>
+                <input
+                  type="text"
+                  placeholder="Product Name"
+                  required
+                  value={formData.name}
+                  onChange={(e) =>
+                    setFormData({ ...formData, name: e.target.value })
+                  }
+                />
+                <select
+                  value={formData.category}
+                  onChange={(e) =>
+                    setFormData({ ...formData, category: e.target.value })
+                  }
+                >
                   <option value="Fluids">Fluids</option>
                   <option value="Cleaning">Cleaning</option>
                   <option value="Tools">Tools</option>
                 </select>
-                <input type="number" placeholder="Price" required value={formData.price} onChange={(e) => setFormData({ ...formData, price: e.target.value })} />
-                <input type="number" placeholder="Quantity" required value={formData.quantity} onChange={(e) => setFormData({ ...formData, quantity: e.target.value })} />
-                <input type="number" placeholder="Discount %" value={formData.discount} onChange={(e) => setFormData({ ...formData, discount: e.target.value })} />
+                <input
+                  type="number"
+                  placeholder="Price"
+                  required
+                  value={formData.price}
+                  onChange={(e) =>
+                    setFormData({ ...formData, price: e.target.value })
+                  }
+                />
+                <input
+                  type="number"
+                  placeholder="Quantity"
+                  required
+                  value={formData.quantity}
+                  onChange={(e) =>
+                    setFormData({ ...formData, quantity: e.target.value })
+                  }
+                />
+                <input
+                  type="number"
+                  placeholder="Discount %"
+                  value={formData.discount}
+                  onChange={(e) =>
+                    setFormData({ ...formData, discount: e.target.value })
+                  }
+                />
               </div>
-              <button type="submit" className="save-btn">{isEditing ? "Update Product" : "Save Product"}</button>
+              <button type="submit" className="save-btn">
+                {isEditing ? "Update Product" : "Save Product"}
+              </button>
             </form>
           </div>
         </div>
