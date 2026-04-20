@@ -5,6 +5,7 @@ import Inventory from "./components/Inventory";
 import Sidebar from "./components/Sidebar"; 
 import Navbar from "./components/Navbar"; 
 import Reports from "./components/Reports"; 
+import AddProduct from "./components/AddProduct";
 import "./App.css"; 
 
 function App() {
@@ -25,6 +26,7 @@ function App() {
                   <Routes>
                     <Route path="/dashboard" element={<Dashboard />} />
                     <Route path="/inventory" element={<Inventory />} />
+                    <Route path="/add-product" element={<AddProduct />} />
                     <Route path="/reports" element={<Reports />} />
                   </Routes>
                 </div>
