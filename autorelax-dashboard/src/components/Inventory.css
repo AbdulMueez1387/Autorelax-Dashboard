@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 :root {
   --primary-orange: #f97316;
   --primary-blue: #1e293b;
@@ -28,6 +29,12 @@ body::-webkit-scrollbar {
   display: block;
   background: var(--bg-light);
   height: auto;
+=======
+/* .inventory-page {
+  padding: 20px;
+  background-color: #f8f9fa;
+  min-height: 100vh;
+>>>>>>> Stashed changes
 }
 
 .inventory-header h1 {
@@ -43,7 +50,12 @@ body::-webkit-scrollbar {
 }
 
 /* Stats Cards */
+<<<<<<< Updated upstream
 .inventory-stats-grid {
+=======
+/* 
+.stats-container {
+>>>>>>> Stashed changes
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 20px;
@@ -52,7 +64,42 @@ body::-webkit-scrollbar {
 
 .inventory-stat-card{
   display: flex;
+<<<<<<< Updated upstream
   align-items: center;
+=======
+  align-items: flex-start;
+  gap: 15px;
+  border: 1px solid #f0f0f0;
+}
+
+.stat-icon {
+  padding: 10px;
+  border-radius: 8px;
+  font-size: 20px;
+}
+
+.stat-info p { font-size: 13px; color: #666; margin: 0; }
+.stat-info h3 { font-size: 24px; margin: 5px 0; color: #333; }
+.stat-info .sub-text { font-size: 11px; color: #aaa; }
+
+/* Colors as per Image */
+/* .pink { border-bottom: 4px solid #ffdada; }
+.pink .stat-icon { background: #fff1f1; color: #ff5b5b; }
+
+.green { border-bottom: 4px solid #d4f8d4; }
+.green .stat-icon { background: #f1fff1; color: #2ecc71; }
+
+.blue { border-bottom: 4px solid #d1ecff; }
+.blue .stat-icon { background: #f0f8ff; color: #3498db; }
+
+.yellow { border-bottom: 4px solid #fff3cd; }
+.yellow .stat-icon { background: #fffcf0; color: #f39c12; }
+
+/* Table Section */
+/* .table-section {
+  background: white;
+  border-radius: 12px;
+>>>>>>> Stashed changes
   padding: 20px;
   border-radius: 12px;
   color: white;
@@ -357,3 +404,58 @@ body::-webkit-scrollbar {
   font-weight: 600;
   cursor: pointer;
 }
+<<<<<<< Updated upstream
+=======
+
+/* Table Design */
+/* .inventory-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.inventory-table th {
+  text-align: left;
+  padding: 15px;
+  background: #fcfcfc;
+  color: #666;
+  font-size: 14px;
+  border-bottom: 2px solid #f1f1f1;
+}
+
+.inventory-table td {
+  padding: 15px;
+  border-bottom: 1px solid #f1f1f1;
+  font-size: 14px;
+  color: #444;
+}
+
+.img-box {
+  width: 45px;
+  height: 45px;
+  background: #f5f5f5;
+  border-radius: 6px;
+} */ */ */
+
+/* Status Pills */
+/* 
+.status-pill {
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.status-pill.good { background: #e8f5e9; color: #2e7d32; }
+.status-pill.expired { background: #ffebee; color: #c62828; }
+.status-pill.instock { background: #e3f2fd; color: #1565c0; }
+
+.actions {
+  font-size: 18px;
+  color: #aaa;
+  display: flex;
+  gap: 15px;
+}
+
+.edit-icon:hover { color: #333; cursor: pointer; }
+.more-icon:hover { color: #333; cursor: pointer; }  */
+>>>>>>> Stashed changes
