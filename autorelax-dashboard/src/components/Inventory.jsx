@@ -114,9 +114,9 @@ const Inventory = () => {
         <p>Real-time stock tracking and management.</p>
       </header>
 
-      <div className="stats-grid">
+      <div className="inventory-stats-grid">
         {/* Total Items */}
-        <div className="stat-card blue-theme">
+        <div className="inventory-stat-card blue-theme">
           <div className="stat-icon">
             <FaBox />
           </div>
@@ -127,7 +127,7 @@ const Inventory = () => {
         </div>
 
         {/* Low Stock */}
-        <div className="stat-card orange-theme">
+        <div className="inventory-stat-card orange-theme">
           <div className="stat-icon">
             <FaExclamationTriangle />
           </div>
@@ -140,7 +140,7 @@ const Inventory = () => {
         </div>
 
         {/* Out of Stock ✅ NEW */}
-        <div className="stat-card red-theme">
+        <div className="inventory-stat-card red-theme">
           <div className="stat-icon">
             <FaTimesCircle />
           </div>
@@ -156,7 +156,7 @@ const Inventory = () => {
         </div>
 
         {/* Categories */}
-        <div className="stat-card purple-theme">
+        <div className="inventory-stat-card purple-theme">
           <div className="stat-icon">
             <FaTags />
           </div>
@@ -193,7 +193,7 @@ const Inventory = () => {
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
             </div>
-            <button className="add-btn" onClick={() => setShowModal(true)}>
+            <button className="add-btn11" onClick={() => setShowModal(true)}>
               <FaPlus /> Add Item
             </button>
           </div>
