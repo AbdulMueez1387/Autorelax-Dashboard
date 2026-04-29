@@ -11,7 +11,7 @@ import {
   FaUpload,
   FaEllipsisH,
   FaEye,
-  FaTimesCircle
+  FaTimesCircle,
 } from "react-icons/fa";
 import "./Inventory.css";
 
@@ -209,12 +209,16 @@ const Inventory = () => {
                 <th>Quantity</th>
                 <th>Disc%</th>
                 <th>Status</th>
+                <th>Total Price</th>
                 <th>Action</th>
               </tr>
             </thead>
             <tbody>
               {filteredData.map((item) => {
                 const status = getStatus(item);
+                const price = Number(item.price);
+                const discount = Number(item.discount) || 0;
+                const finalPrice = price - (price * discount) / 100;
                 return (
                   <tr key={item.id}>
                     <td className="item-name-cell">
@@ -236,6 +240,7 @@ const Inventory = () => {
                         {status}
                       </span>
                     </td>
+                    <td>Rs. {finalPrice.toFixed(2)}</td>
                     <td className="action-col">
                       <div className="action-wrapper">
                         <button
