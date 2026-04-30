@@ -14,6 +14,7 @@ import {
   FaTimesCircle,
 } from "react-icons/fa";
 import "./Inventory.css";
+  import { nanoid } from 'nanoid';
 
 const Inventory = () => {
   const [inventoryData, setInventoryData] = useState(() => {
@@ -60,24 +61,27 @@ const Inventory = () => {
     return "In Stock";
   };
 
-  const handleSave = (e) => {
-    e.preventDefault();
-    const finalData = {
-      ...formData,
-      totalCapacity: isEditing ? formData.totalCapacity : formData.quantity,
-    };
 
-    if (isEditing) {
-      setInventoryData(
-        inventoryData.map((item) =>
-          item.id === editId ? { ...finalData, id: editId } : item,
-        ),
-      );
-    } else {
-      setInventoryData([...inventoryData, { ...finalData, id: Date.now() }]);
-    }
-    closeModal();
+
+const handleSave = (e) => {
+  e.preventDefault();
+  const finalData = {
+    ...formData,
+    totalCapacity: isEditing ? formData.totalCapacity : formData.quantity,
   };
+
+  if (isEditing) {
+    setInventoryData(
+      inventoryData.map((item) =>
+        item.id === editId ? { ...finalData, id: editId } : item,
+      ),
+    );
+  } else {
+    setInventoryData([...inventoryData, { ...finalData, id: nanoid() }]);
+  }
+  closeModal();
+};
+
 
   const openEditModal = (item) => {
     setFormData(item);
