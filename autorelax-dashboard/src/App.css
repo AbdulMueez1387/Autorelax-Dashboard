@@ -1,4 +1,3 @@
-/* Purana #root styling poora delete kar dena */
 #root {
   width: 100%;
   margin: 0;
@@ -9,7 +8,7 @@
 body {
   margin: 0;
   padding: 0;
-  overflow: hidden; /* Poori body ka scroll band */
+  overflow: hidden; 
 }
 
 .app-layout {
@@ -22,20 +21,20 @@ body {
 
 .main-body {
   display: flex;
-  flex: 1; /* Bachi hui height (100vh - Navbar) */
+  flex: 1; 
   overflow: hidden; 
 }
 
 .content-container {
   flex: 1;
-  margin-left: 250px; /* Sidebar Width */
-  margin-top: 70px;  /* Navbar Height */
+  margin-left: 250px; 
+  margin-top: 70px;  
   background-color: #f8f9fa;
   padding: 25px;
   box-sizing: border-box;
   
-  /* Scroll control */
-  overflow-y: auto; /* Isko auto tab karna agar content bilkul fit na aaye */
+  
+  overflow-y: auto; 
   display: flex;
   flex-direction: column;
 }

@@ -8,6 +8,6 @@
 
 .dashboard-body {
   display: flex;
-  flex: 1; /* Navbar ke neeche bachi hui sari space */
+  flex: 1; 
   overflow: hidden;
 }

@@ -12,9 +12,10 @@ import {
   FaEllipsisH,
   FaEye,
   FaTimesCircle,
+  FaInfoCircle,
 } from "react-icons/fa";
 import "./Inventory.css";
-  import { nanoid } from 'nanoid';
+import { nanoid } from 'nanoid';
 
 const Inventory = () => {
   const [inventoryData, setInventoryData] = useState(() => {
@@ -23,6 +24,8 @@ const Inventory = () => {
   });
 
   const [showModal, setShowModal] = useState(false);
+  const [showDescModal, setShowDescModal] = useState(false); 
+  const [selectedDesc, setSelectedDesc] = useState(""); 
   const [isEditing, setIsEditing] = useState(false);
   const [editId, setEditId] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
@@ -37,6 +40,7 @@ const Inventory = () => {
     price: "",
     discount: "",
     image: "",
+    description: "", 
   });
 
   useEffect(() => {
@@ -61,27 +65,24 @@ const Inventory = () => {
     return "In Stock";
   };
 
+  const handleSave = (e) => {
+    e.preventDefault();
+    const finalData = {
+      ...formData,
+      totalCapacity: isEditing ? formData.totalCapacity : formData.quantity,
+    };
 
-
-const handleSave = (e) => {
-  e.preventDefault();
-  const finalData = {
-    ...formData,
-    totalCapacity: isEditing ? formData.totalCapacity : formData.quantity,
+    if (isEditing) {
+      setInventoryData(
+        inventoryData.map((item) =>
+          item.id === editId ? { ...finalData, id: editId } : item,
+        ),
+      );
+    } else {
+      setInventoryData([...inventoryData, { ...finalData, id: nanoid() }]);
+    }
+    closeModal();
   };
-
-  if (isEditing) {
-    setInventoryData(
-      inventoryData.map((item) =>
-        item.id === editId ? { ...finalData, id: editId } : item,
-      ),
-    );
-  } else {
-    setInventoryData([...inventoryData, { ...finalData, id: nanoid() }]);
-  }
-  closeModal();
-};
-
 
   const openEditModal = (item) => {
     setFormData(item);
@@ -102,7 +103,13 @@ const handleSave = (e) => {
       price: "",
       discount: "",
       image: "",
+      description: "",
     });
+  };
+
+  const openDescription = (desc) => {
+    setSelectedDesc(desc || "No description provided.");
+    setShowDescModal(true);
   };
 
   const filteredData = inventoryData.filter(
@@ -119,22 +126,16 @@ const handleSave = (e) => {
       </header>
 
       <div className="inventory-stats-grid">
-        {/* Total Items */}
         <div className="inventory-stat-card blue-theme">
-          <div className="stat-icon">
-            <FaBox />
-          </div>
+          <div className="stat-icon"><FaBox /></div>
           <div className="stat-info">
             <span className="stat-label">Total Items</span>
             <h2 className="stat-count">{inventoryData.length}</h2>
           </div>
         </div>
 
-        {/* Low Stock */}
         <div className="inventory-stat-card orange-theme">
-          <div className="stat-icon">
-            <FaExclamationTriangle />
-          </div>
+          <div className="stat-icon"><FaExclamationTriangle /></div>
           <div className="stat-info">
             <span className="stat-label">Low Stock</span>
             <h2 className="stat-count">
@@ -143,27 +144,18 @@ const handleSave = (e) => {
           </div>
         </div>
 
-        {/* Out of Stock ✅ NEW */}
         <div className="inventory-stat-card red-theme">
-          <div className="stat-icon">
-            <FaTimesCircle />
-          </div>
+          <div className="stat-icon"><FaTimesCircle /></div>
           <div className="stat-info">
             <span className="stat-label">Out of Stock</span>
             <h2 className="stat-count">
-              {
-                inventoryData.filter((i) => getStatus(i) === "Out of Stock")
-                  .length
-              }
+              {inventoryData.filter((i) => getStatus(i) === "Out of Stock").length}
             </h2>
           </div>
         </div>
 
-        {/* Categories */}
         <div className="inventory-stat-card purple-theme">
-          <div className="stat-icon">
-            <FaTags />
-          </div>
+          <div className="stat-icon"><FaTags /></div>
           <div className="stat-info">
             <span className="stat-label">Categories</span>
             <h2 className="stat-count">
@@ -209,6 +201,7 @@ const handleSave = (e) => {
               <tr>
                 <th>Item Name</th>
                 <th>Category</th>
+                <th>Description</th> 
                 <th>Price</th>
                 <th>Quantity</th>
                 <th>Disc%</th>
@@ -223,6 +216,9 @@ const handleSave = (e) => {
                 const price = Number(item.price);
                 const discount = Number(item.discount) || 0;
                 const finalPrice = price - (price * discount) / 100;
+                
+                const firstWord = item.description ? item.description.split(" ")[0] : "None";
+
                 return (
                   <tr key={item.id}>
                     <td className="item-name-cell">
@@ -234,50 +230,44 @@ const handleSave = (e) => {
                       <span className="truncate-text">{item.name}</span>
                     </td>
                     <td>{item.category}</td>
+                    <td>
+                      <span 
+                        className="desc-preview-link" 
+                        onClick={() => openDescription(item.description)}
+                        style={{ cursor: 'pointer', color: '#3498db', textDecoration: 'underline' }}
+                      >
+                        {firstWord}...
+                      </span>
+                    </td>
                     <td>Rs. {item.price}</td>
                     <td>{item.quantity}</td>
                     <td>{item.discount}%</td>
                     <td>
-                      <span
-                        className={`status-pill ${status.toLowerCase().replace(/\s+/g, "-")}`}
-                      >
+                      <span className={`status-pill ${status.toLowerCase().replace(/\s+/g, "-")}`}>
                         {status}
                       </span>
                     </td>
                     <td>Rs. {finalPrice.toFixed(2)}</td>
                     <td className="action-col">
                       <div className="action-wrapper">
-                        <button
-                          className="icon-btn edit"
-                          onClick={() => openEditModal(item)}
-                        >
+                        <button className="icon-btn edit" onClick={() => openEditModal(item)}>
                           <FaEdit />
                         </button>
                         <button
                           className="icon-btn menu"
-                          onClick={() =>
-                            setActiveMenu(
-                              activeMenu === item.id ? null : item.id,
-                            )
-                          }
+                          onClick={() => setActiveMenu(activeMenu === item.id ? null : item.id)}
                         >
                           <FaEllipsisH />
                         </button>
                         {activeMenu === item.id && (
                           <div className="dropdown-menu">
-                            <button
-                              onClick={() => {
-                                if (window.confirm("Delete?"))
-                                  setInventoryData(
-                                    inventoryData.filter(
-                                      (i) => i.id !== item.id,
-                                    ),
-                                  );
-                              }}
-                            >
+                            <button onClick={() => {
+                              if (window.confirm("Delete?"))
+                                setInventoryData(inventoryData.filter((i) => i.id !== item.id));
+                            }}>
                               <FaTrashAlt /> Delete
                             </button>
-                            <button>
+                            <button onClick={() => openDescription(item.description)}>
                               <FaEye /> Details
                             </button>
                           </div>
@@ -297,28 +287,12 @@ const handleSave = (e) => {
           <div className="modal-content">
             <div className="modal-header">
               <h2>{isEditing ? "Update Product" : "Add New Product"}</h2>
-              <div className="close-modal-icon" onClick={closeModal}>
-                <FaTimes />
-              </div>
+              <div className="close-modal-icon" onClick={closeModal}><FaTimes /></div>
             </div>
             <form onSubmit={handleSave}>
-              <div
-                className="image-upload-box"
-                onClick={() => document.getElementById("fileInput").click()}
-              >
-                {formData.image ? (
-                  <img src={formData.image} alt="preview" />
-                ) : (
-                  <>
-                    <FaUpload /> <p>Upload Image</p>
-                  </>
-                )}
-                <input
-                  type="file"
-                  id="fileInput"
-                  hidden
-                  onChange={handleImageChange}
-                />
+              <div className="image-upload-box" onClick={() => document.getElementById("fileInput").click()}>
+                {formData.image ? <img src={formData.image} alt="preview" /> : <><FaUpload /> <p>Upload Image</p></>}
+                <input type="file" id="fileInput" hidden onChange={handleImageChange} />
               </div>
               <div className="form-grid">
                 <input
@@ -326,15 +300,11 @@ const handleSave = (e) => {
                   placeholder="Product Name"
                   required
                   value={formData.name}
-                  onChange={(e) =>
-                    setFormData({ ...formData, name: e.target.value })
-                  }
+                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                 />
                 <select
                   value={formData.category}
-                  onChange={(e) =>
-                    setFormData({ ...formData, category: e.target.value })
-                  }
+                  onChange={(e) => setFormData({ ...formData, category: e.target.value })}
                 >
                   <option value="Fluids">Fluids</option>
                   <option value="Cleaning">Cleaning</option>
@@ -345,32 +315,47 @@ const handleSave = (e) => {
                   placeholder="Price"
                   required
                   value={formData.price}
-                  onChange={(e) =>
-                    setFormData({ ...formData, price: e.target.value })
-                  }
+                  onChange={(e) => setFormData({ ...formData, price: e.target.value })}
                 />
                 <input
                   type="number"
                   placeholder="Quantity"
                   required
                   value={formData.quantity}
-                  onChange={(e) =>
-                    setFormData({ ...formData, quantity: e.target.value })
-                  }
+                  onChange={(e) => setFormData({ ...formData, quantity: e.target.value })}
                 />
                 <input
                   type="number"
                   placeholder="Discount %"
                   value={formData.discount}
-                  onChange={(e) =>
-                    setFormData({ ...formData, discount: e.target.value })
-                  }
+                  onChange={(e) => setFormData({ ...formData, discount: e.target.value })}
+                />
+                <textarea
+                  placeholder="Enter Product Description"
+                  className="full-width-input"
+                  style={{ gridColumn: "span 2", padding: "10px", borderRadius: "5px", border: "1px solid #ddd" }}
+                  value={formData.description}
+                  onChange={(e) => setFormData({ ...formData, description: e.target.value })}
                 />
               </div>
               <button type="submit" className="save-btn">
                 {isEditing ? "Update Product" : "Save Product"}
               </button>
             </form>
+          </div>
+        </div>
+      )}
+
+      {showDescModal && (
+        <div className="modal-overlay" onClick={() => setShowDescModal(false)}>
+          <div className="modal-content" onClick={(e) => e.stopPropagation()} style={{ maxWidth: "400px" }}>
+            <div className="modal-header">
+              <h3><FaInfoCircle style={{ marginRight: "10px" }} /> Description</h3>
+              <div className="close-modal-icon" onClick={() => setShowDescModal(false)}><FaTimes /></div>
+            </div>
+            <div style={{ padding: "20px", lineHeight: "1.6", color: "#444" }}>
+              {selectedDesc}
+            </div>
           </div>
         </div>
       )}

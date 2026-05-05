@@ -15,12 +15,12 @@
 body {
   overflow-y: auto !important;
 
-  scrollbar-width: none;       /* Firefox */
-  -ms-overflow-style: none;    /* IE/Edge */
+  scrollbar-width: none;       
+  -ms-overflow-style: none;    
 }
 
 body::-webkit-scrollbar {
-  display: none;               /* Chrome, Safari */
+  display: none;               
 }
 
 .inventory-container {
@@ -42,7 +42,6 @@ body::-webkit-scrollbar {
   font-size: 14px;
 }
 
-/* Stats Cards */
 .inventory-stats-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -77,14 +76,13 @@ body::-webkit-scrollbar {
   font-weight: 800;
 }
 
-/* --- Table Section --- */
 .table-section {
   background: var(--white);
   border-radius: 12px;
   box-shadow: var(--card-shadow);
   padding: 20px;
   margin-top: 20px;
-  margin-bottom: 40px; /* Neechay thori space taake scroll end tak dikhe */
+  margin-bottom: 40px; 
 }
 
 .table-header {
@@ -148,31 +146,61 @@ body::-webkit-scrollbar {
   font-weight: 600;
 }
 
-/* --- Table Wrapper (PAGE SCROLL VERSION) --- */
+
 .table-wrapper {
   width: 100%;
   height: auto;
-
-  overflow-y: visible;   /* page scroll use hoga */
-  overflow-x: auto;
-
+  overflow-x: auto; 
   border: 1px solid #f1f5f9;
   border-radius: 8px;
   position: relative;
 }
 
-.table-wrapper::-webkit-scrollbar {
-  display: none;
-}
 
 .inventory-table {
   width: 100%;
-  min-width: 950px;
+  min-width: 1100px; 
   border-collapse: collapse;
 }
 
+.action-col {
+  width: 100px;
+  text-align: center;
+}
+
+.action-wrapper {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.desc-preview-link {
+  color: #3b82f6;
+  text-decoration: none;
+  font-weight: 500;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.desc-preview-link:hover {
+  color: #1d4ed8;
+  text-decoration: underline;
+}
+
+.full-width-input {
+  grid-column: span 2;
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  outline: none;
+  font-family: inherit;
+  resize: vertical;
+  min-height: 80px;
+}
+
 .inventory-table thead {
-  /* Header ko sticky kiya hai taake scroll karte waqt top par rahay */
   position: sticky;
   top: 0;
   z-index: 10;
@@ -196,7 +224,6 @@ body::-webkit-scrollbar {
   font-size: 14px;
 }
 
-/* Item Name Cell */
 .item-name-cell {
   display: flex;
   align-items: center;
@@ -221,7 +248,6 @@ body::-webkit-scrollbar {
 
 
 
-/* Status Pills */
 .status-pill {
   padding: 5px 12px;
   border-radius: 20px;
@@ -242,7 +268,6 @@ body::-webkit-scrollbar {
   color: #b91c1c;
 }
 
-/* Action Buttons */
 .action-wrapper {
   display: flex;
   gap: 10px;
@@ -256,7 +281,6 @@ body::-webkit-scrollbar {
   font-size: 16px;
 }
 
-/* --- Modal Style --- */
 .modal-overlay {
   position: fixed;
   top: 0;

@@ -36,12 +36,10 @@ ChartJS.register(
 );
 
 const MainContent = () => {
-  // ================= STATES =================
   const [totalExpense, setTotalExpense] = useState(0);
   const [timeFrame, setTimeFrame] = useState("Monthly");
   const [orders, setOrders] = useState([]);
 
-  // ================= LOAD ORDERS (FIXED) =================
   useEffect(() => {
     const loadOrders = () => {
       try {
@@ -55,6 +53,9 @@ const MainContent = () => {
               id: 1,
               orderId: "ORD-001",
               fullName: "Ali Khan",
+              itemName: "Engine Oil",
+              quantity: 2,           
+              totalPrice: 5000,      
               city: "Lahore",
               postalCode: "54000",
               phone: "03001234567",
@@ -73,13 +74,11 @@ const MainContent = () => {
     loadOrders();
   }, []);
 
-  // ================= SAVE ORDERS =================
   useEffect(() => {
     if (orders.length === 0) return;
     localStorage.setItem("orders", JSON.stringify(orders));
   }, [orders]);
 
-  // ================= STATUS UPDATE =================
   const updateStatus = (id, newStatus) => {
     setOrders((prev) =>
       prev.map((order) =>
@@ -88,7 +87,6 @@ const MainContent = () => {
     );
   };
 
-  // ================= EXPENSES (FIXED WARNING) =================
   useEffect(() => {
     const loadExpenses = () => {
       const savedExpenses = localStorage.getItem("expenses");
@@ -114,7 +112,6 @@ const MainContent = () => {
     loadExpenses();
   }, []);
 
-  // ================= CHART =================
   const chartData = useMemo(() => {
     const labels = {
       Daily: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
@@ -140,7 +137,6 @@ const MainContent = () => {
     };
   }, [timeFrame, totalExpense]);
 
-  // ================= CARDS =================
   const cards = [
     {
       label: "Total Sales",
@@ -184,7 +180,6 @@ const MainContent = () => {
         <div className="header-date">{new Date().toLocaleDateString()}</div>
       </div>
 
-      {/* ================= CARDS ================= */}
       <div className="dashboard-stats-grid">
         {cards.map((c, i) => (
           <div key={i} className="dashboard-card-pro">
@@ -193,9 +188,7 @@ const MainContent = () => {
                 <span className="card-label">{c.label}</span>
                 <h3 className="card-value">{c.val}</h3>
 
-                <div
-                  style={{ display: "flex", alignItems: "center", gap: "5px" }}
-                >
+                <div className={`card-update ${c.isLoss ? "text-red" : "text-green"}`}>
                   {c.isLoss ? <FaArrowDown /> : <FaArrowUp />}
                   <span>{c.update}</span>
                 </div>
@@ -207,7 +200,6 @@ const MainContent = () => {
         ))}
       </div>
 
-      {/* ================= CHARTS ================= */}
       <div className="dashboard-charts-layout">
         <div className="chart-box">
           <h3>Revenue</h3>
@@ -242,88 +234,111 @@ const MainContent = () => {
         </div>
       </div>
 
-      {/* ================= ORDERS ================= */}
       <div className="orders-section">
         <h3>Orders</h3>
 
         <div className="table-wrapper">
-  <table className="orders-table">
-    <thead>
-      <tr>
-        <th>Order ID</th>
-        <th>Name</th>
-        <th>City</th>
-        <th>Postal Code</th>
-        <th>Phone</th>
-        <th>Address</th>
-        <th>Apartment</th>
-        <th>Status</th>
-        <th>Action</th>
-      </tr>
-    </thead>
+          <table className="orders-table">
+            <thead>
+              <tr>
+                <th>Order ID</th>
+                <th>Name</th>
+                <th>Item Name</th> 
+                <th>Qty</th>       
+                <th>Total Price</th> 
+                <th>City</th>
+                <th>Postal Code</th>
+                <th>Phone</th>
+                <th>Address</th>
+                <th>Apartment</th>
+                <th>Status</th>
+                <th>Action</th>
+              </tr>
+            </thead>
 
-    <tbody>
-      {orders.map((order) => {
-        const statusClass = order.status.toLowerCase().replace(/\s+/g, "-");
+            <tbody>
+              {orders.map((order) => {
+                const statusClass = order.status
+                  .toLowerCase()
+                  .replace(/\s+/g, "-");
 
-        return (
-          <tr key={order.id}>
-            <td>{order.orderId}</td>
-            <td>{order.fullName}</td>
-            <td>{order.city}</td>
-            <td>{order.postalCode}</td>
-            <td>{order.phone}</td>
-            <td>{order.address ?? "N/A"}</td>
-            <td>{order.apartment ?? "N/A"}</td>
+                return (
+                  <tr key={order.id}>
+                    <td>{order.orderId}</td>
+                    <td>{order.fullName}</td>
+                    <td>{order.itemName ?? "N/A"}</td> 
+                    <td>{order.quantity ?? 0}</td>      
+                    <td>RS {order.totalPrice?.toLocaleString() ?? 0}</td> 
+                    <td>{order.city}</td>
+                    <td>{order.postalCode}</td>
+                    <td>{order.phone}</td>
+                    <td>{order.address ?? "N/A"}</td>
+                    <td>{order.apartment ?? "N/A"}</td>
 
-            {/* STATUS DROPDOWN */}
-            <td>
-              <select
-                value={order.status}
-                onChange={(e) => updateStatus(order.id, e.target.value)}
-                className={`status-select status ${statusClass}`}
-              >
-                <option value="Pending">Pending</option>
-                <option value="In Progress">In Progress</option>
-                <option value="Completed">Completed</option>
-                <option value="Canceled">Canceled</option>
-              </select>
-            </td>
+                    <td>
+                      <select
+                        value={order.status}
+                        onChange={(e) => updateStatus(order.id, e.target.value)}
+                        className={`status-select status ${statusClass}`}
+                      >
+                        <option value="Pending">Pending</option>
+                        <option value="In Progress">In Progress</option>
+                        <option value="Completed">Completed</option>
+                        <option value="Canceled">Canceled</option>
+                      </select>
+                    </td>
 
-            {/* ACTION */}
-            <td>
-              {order.status === "Pending" && (
-                <>
-                  <button className="primary" onClick={() => updateStatus(order.id, "In Progress")}>
-                    Start
-                  </button>
-                  <button className="danger" onClick={() => updateStatus(order.id, "Canceled")}>
-                    Cancel
-                  </button>
-                </>
-              )}
+                    <td>
+                      {order.status === "Pending" && (
+                        <>
+                          <button
+                            className="primary"
+                            onClick={() =>
+                              updateStatus(order.id, "In Progress")
+                            }
+                          >
+                            Start
+                          </button>
+                          <button
+                            className="danger"
+                            onClick={() => updateStatus(order.id, "Canceled")}
+                          >
+                            Cancel
+                          </button>
+                        </>
+                      )}
 
-              {order.status === "In Progress" && (
-                <>
-                  <button className="success" onClick={() => updateStatus(order.id, "Completed")}>
-                    Complete
-                  </button>
-                  <button className="danger" onClick={() => updateStatus(order.id, "Canceled")}>
-                    Cancel
-                  </button>
-                </>
-              )}
+                      {order.status === "In Progress" && (
+                        <>
+                          <button
+                            className="success"
+                            onClick={() => updateStatus(order.id, "Completed")}
+                          >
+                            Complete
+                          </button>
+                          <button
+                            className="danger"
+                            onClick={() => updateStatus(order.id, "Canceled")}
+                          >
+                            Cancel
+                          </button>
+                        </>
+                      )}
 
-              {order.status === "Completed" && <span className="done">✔ Done</span>}
+                      {order.status === "Completed" && (
+                        <span className="done">✔ Done</span>
+                      )}
 
-              {order.status === "Canceled" && <span className="cancel">✖ Canceled</span>}
-            </td>
-          </tr>
-        );
-      })}
-    </tbody>
-  </table>
-</div>
+                      {order.status === "Canceled" && (
+                        <span className="cancel">✖ Canceled</span>
+                      )}
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
       </div>
     </main>
   );

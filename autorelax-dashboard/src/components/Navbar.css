@@ -10,7 +10,7 @@
   top: 0;
   left: 0;
   right: 0;
-  z-index: 1000; /* Sidebar se upar rakha hai */
+  z-index: 1000; 
 }
 
 .logo img { height: 40px; }

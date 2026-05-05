@@ -6,7 +6,9 @@ import Sidebar from "./components/Sidebar";
 import Navbar from "./components/Navbar"; 
 import Reports from "./components/Reports"; 
 import AddProduct from "./components/AddProduct";
+import Invoice from "./components/Invoice";
 import "./App.css"; 
+import FinancialReports from "./components/FinancialReports";
 
 function App() {
   return (
@@ -28,6 +30,8 @@ function App() {
                     <Route path="/inventory" element={<Inventory />} />
                     <Route path="/add-product" element={<AddProduct />} />
                     <Route path="/reports" element={<Reports />} />
+                    <Route path="/profit-loss" element={<FinancialReports/>}/>
+                    <Route path="/docs" element={<Invoice />} />
                   </Routes>
                 </div>
               </div>

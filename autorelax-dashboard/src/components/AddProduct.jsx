@@ -12,6 +12,7 @@ const AddProduct = () => {
     price: "",
     discount: "",
     image: "",
+    description: "", 
   });
 
   const handleImageChange = (e) => {
@@ -50,7 +51,7 @@ const AddProduct = () => {
       <div className="add-product-card">
         <form onSubmit={handleSave}>
 
-          {/* Image Upload */}
+
           <div
             className="image-upload-box"
             onClick={() => document.getElementById("fileInput").click()}
@@ -68,11 +69,12 @@ const AddProduct = () => {
             />
           </div>
 
-          {/* Form Grid */}
+         
           <div className="form-grid">
             <input
               type="text"
               placeholder="Product Name"
+              className="full-width-input" 
               required
               onChange={(e) =>
                 setFormData({ ...formData, name: e.target.value })
@@ -80,13 +82,14 @@ const AddProduct = () => {
             />
 
             <select
+              value={formData.category}
               onChange={(e) =>
                 setFormData({ ...formData, category: e.target.value })
               }
             >
-              <option>Fluids</option>
-              <option>Cleaning</option>
-              <option>Tools</option>
+              <option value="Fluids">Fluids</option>
+              <option value="Cleaning">Cleaning</option>
+              <option value="Tools">Tools</option>
             </select>
 
             <input
@@ -112,6 +115,23 @@ const AddProduct = () => {
               placeholder="Discount %"
               onChange={(e) =>
                 setFormData({ ...formData, discount: e.target.value })
+              }
+            />
+
+            
+            <textarea
+              placeholder="Product Description"
+              style={{
+                gridColumn: "span 2",
+                padding: "12px",
+                borderRadius: "10px",
+                border: "1px solid #e2e8f0",
+                outline: "none",
+                minHeight: "100px",
+                fontFamily: "inherit"
+              }}
+              onChange={(e) =>
+                setFormData({ ...formData, description: e.target.value })
               }
             />
           </div>
